@@ -1,0 +1,53 @@
+ion-title {
+    background-image: linear-gradient(45deg, var(--soft-blue), var(--dark-blue), var(--dark-blue));
+    color: var(--cor-fonte-painel);
+}
+
+p {
+    font-size: var(--tamanho-fonte-texto);
+}
+
+.about {
+    width: auto;
+    font-size: 14pt;
+}
+
+.content {
+    overflow: scroll;
+    padding-bottom: 20vh;
+}
+
+.info {
+    width: 85vw;
+    margin: 7%;
+    line-height: 156%;
+    text-align: justify;
+}
+
+.project {
+    width: auto;
+    font-size: 25pt;
+}
+
+.title {
+    color: var(--soft-gray);
+    display: flex;
+    justify-content: center;
+}
+
+.version {
+    color: rgb(143, 143, 143);
+    width: auto;
+}
+
+.voltar {
+    background-image: linear-gradient(45deg, var(--soft-blue), var(--dark-blue), var(--dark-blue));
+    color: var(--soft-gray);
+    position: fixed;
+    width: 120px;
+    height: 40px;
+    border-radius: var(--bordas-arredondadas-pequeno);
+    box-shadow: 1px 1px 5px black;
+    bottom: 2vh;
+    left: 4vw;
+}

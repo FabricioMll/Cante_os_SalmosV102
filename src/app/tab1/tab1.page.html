@@ -1,0 +1,86 @@
+<div class="header">
+  <ion-icon (click)="refresh()" class="header-icon icon-refresh" name="refresh-outline"></ion-icon>
+
+  <div class="title">
+    <ion-title>
+      <h1 class="appTitle">
+        Cante os Salmos
+      </h1>
+    </ion-title>
+  </div>
+  <ion-icon (click)="isVisible = !isVisible" class="header-icon" name="funnel-outline"
+    id="open-modal-filtro"></ion-icon>
+</div>
+
+<div id="funnel" style="margin-bottom: -6px;">
+  <div class="search">
+    <ion-searchbar class="search-bar" (ngModelChange)="buscar()" [(ngModel)]="buscarPor"
+      placeholder="Texto, Título, Capítulo..."></ion-searchbar>
+  </div>
+</div>
+
+<ion-modal trigger="open-modal-filtro" (willDismiss)="onWillDismiss($event)">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button color="medium" (click)="cancelModalFilter()">Cancelar</ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button color="warning" (click)="confirmModalFilter()">Confirma</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item>
+          <ion-select *ngIf="classificacao" interface="popover" placeholder="Selecione o assunto"
+            [(ngModel)]="opcaoSelecionada">
+            <div *ngFor="let c of classificacao">
+              <ion-select-option value="{{ c.classe }}">{{ c.classe }}</ion-select-option>
+            </div>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<div *ngIf="buscandoPor != ''" class="result-busca">
+  <p style="margin: auto;padding: 5px;">Buscando por "{{ buscarPor }}"</p>
+  <button *ngIf="salmos.length > 0" class="gerar-playist" (click)="criarPlaylistSelecionada()">
+    <p class="playlist-confirmada" *ngIf="playlistSelecionada">
+      <ion-icon class="icon-confirm" name="checkmark-circle-outline"></ion-icon>
+      Playlist Confirmada
+    </p>
+    <p *ngIf="!playlistSelecionada">
+      Confirmar esta playlist
+    </p>
+  </button>
+</div>
+
+<ion-content id="content">
+  <div id="contentList" class="content-list" *ngIf="salmos">
+    <ion-list class="lista" *ngFor="let salmo of salmos" routerLink="/tab2/{{salmo.titulo}}">
+      <label class="label">
+        {{ salmo.titulo }}
+      </label>
+    </ion-list>
+  </div>
+  <div *ngIf="salmos.length == 0 && buscandoPor != ''" class="carregar buscaVazia">
+    <label class="label">Não encontramos arquivos que correspondam a sua pesquisa</label>
+    <button class="botaoOk" (click)="refresh()">Ok</button>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <div class="creditos">
+    Desenvolvido com
+    <ion-icon style="color:rgb(217, 32, 32);margin: 5px;" name="heart"></ion-icon>
+    por
+    <a style="text-decoration: none;margin: 5px;" href="https://iprcampobom.com.br/" target="_blank"> IPRCampoBom</a>
+    <button class="info" routerLink="/info">
+      <ion-icon name="information-circle-outline"></ion-icon>
+    </button>
+  </div>
+</ion-footer>

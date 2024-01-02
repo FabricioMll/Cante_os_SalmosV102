@@ -1,0 +1,114 @@
+<div id="cabecalho">
+  <ion-title>
+    <div id="barraDeTitulo">
+      <button id="voltar" routerLink="/" (click)="unload()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </button>
+      <ion-list class="titulo-lista">
+        <div class="titulo-select">
+          <ion-select class="titulo-select-items" *ngIf="salmo[0]" placeholder="{{ salmo[0].titulo }}"
+            interface="popover" [(ngModel)]="opcaoSelecionada" (ionChange)="confirm()">
+            <div *ngFor="let s of salmos">
+              <ion-select-option value="{{ s.titulo }}">{{ s.titulo }}</ion-select-option>
+            </div>
+          </ion-select>
+        </div>
+      </ion-list>
+      <button #activatedFontSize (click)="fontSizeActive = !fontSizeActive"
+        class="tamLetraA {{ fontSizeActive ? 'activated' : '' }}">
+        <span>
+          <ion-icon name="text-outline"></ion-icon>
+        </span>
+      </button>
+    </div>
+  </ion-title>
+</div>
+
+<ion-content id="container">
+  <div *ngIf="salmo" class="info" [class]="isDarkMode ? 'dark-theme' : 'light-theme'">
+    <div class="classificacao">
+      <p *ngFor="let classificacao of salmo[0].classificacao">
+        {{ classificacao ? classificacao : '' }}
+      </p>
+    </div>
+    <div #changeFontSize *ngIf="fontSizeActive" id="tamanhoLetra" (blur)="fontSizeActive = false">
+      <button class="botaoTamanhoLetra" (click)="tamanhoLetra('+')">
+        <ion-icon name="add-outline"></ion-icon>
+      </button>
+
+      <button class="botaoTamanhoLetra" (click)="tamanhoLetra('-')">
+        <ion-icon name="remove-outline"></ion-icon>
+      </button>
+    </div>
+    <p class="gravacao">Gravação: {{ salmo[0].gravacao }}</p>
+  </div>
+  <hr [class]="isDarkMode ? 'dark-theme' : 'light-theme'">
+  <div *ngIf="salmo[0]" [class]="isDarkMode ? 'dark-theme' : 'light-theme'" style="background-color: #fff;">
+    <div class="navByGesture">
+      <ion-icon class="navByGestureIcon navBackGesture" id="skipBackByGesture" name="play-back-outline"></ion-icon>
+      <ion-icon class="navByGestureIcon navForwardGesture" id="skipForwardByGesture"
+        name="play-forward-outline"></ion-icon>
+    </div>
+    <div class="textoHtml" id="textoHtml{{salmo[0].id}}" innerHTML="{{salmo[0].texto}}"></div>
+    <div *ngIf="!salmo">Não foi possível carregar o conteúdo</div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <div id="controles">
+    <div id="timer">
+      <p id="tempoCorrente">
+        {{tempoMin.toFixed(0)}}:{{tempoSeg.toFixed(0)}}
+      </p>
+      <ion-range #range [(ngModel)]="progresso" max="100" (touchend)="seek()" (mouseup)="seek()"></ion-range>
+      <p id="duracao">
+        {{duracaoMin.toFixed(0)}}:{{duracaoSeg.toFixed(0)}}
+      </p>
+    </div>
+    <div class="botoesControles">
+      <button *ngIf="salmo && !aleatorio" id="loop" (click)="setLoop()"
+        class="botaoOpcoes botaoLoop {{ loop == 'true' ? 'ativado' : 'desativado' }}">
+        <ion-icon name="repeat-outline"></ion-icon>
+      </button>
+      <button *ngIf="salmo && aleatorio" id="loop" class="botaoOpcoes botaoLoop desativado">
+        <ion-icon class="desabilitado" name="repeat-outline"></ion-icon>
+      </button>
+      <button class="mudar-salmo anterior" (click)="navegarAnterior()">
+        <ion-icon class="{{ indexAtual <= 0 ? 'desabilitado' : '' }}" name="play-skip-back-outline"></ion-icon>
+      </button>
+      <button *ngIf="!isPlaying" id="play" (click)="play()">
+        <ion-icon name="caret-forward-outline"></ion-icon>
+      </button>
+      <button *ngIf="isPlaying" id="pause" (click)="pause()">
+        <ion-icon name="pause"></ion-icon>
+      </button>
+      <button *ngIf="salmo" class="mudar-salmo proximo" (click)="navegarProximo()">
+        <ion-icon name="play-skip-forward-outline"></ion-icon>
+      </button>
+      <button *ngIf="salmo && loop == 'false'" id="aleatorio" (click)="setAleatorio()"
+        class="botaoOpcoes botaoOrdemAleatoria {{ aleatorio ? 'ativado' : 'desativado' }}">
+        <ion-icon name="shuffle-outline"></ion-icon>
+      </button>
+      <button *ngIf="salmo && loop == 'true'" id="aleatorio" class="botaoOpcoes botaoOrdemAleatoria desativado">
+        <ion-icon class="desabilitado" class="desabilitado" name="shuffle-outline"></ion-icon>
+      </button>
+    </div>
+    <div class="opcoes">
+      <div style="position: relative; width: 36px;">
+        <button id="defAutoplay" (click)="setAutoplay()"
+          class=" botaoOpcoes botaoAutoPlay {{ autoplay == 'true' ? 'autoplay-true' : 'autoplay-false' }}">
+          <ion-icon name="caret-forward-circle-outline"
+            class="autoplay-icon {{ autoplay == 'true' ? 'autoplay-icon-true' : 'autoplay-icon-false' }}"></ion-icon>
+        </button>
+      </div>
+
+      <span class="span-link">
+        <a href="https://salmos.iprcampobom.com.br/" target="_blank" class="link-cante-os-salmos">Cante os Salmos</a>
+        <ion-icon name="link-outline" class="ion-link-website"></ion-icon>
+      </span>
+      <button class="botaoOpcoes desativado compartilhar" (click)="compartilhar()">
+        <ion-icon name="share-social-outline"></ion-icon>
+      </button>
+    </div>
+  </div>
+</ion-footer>
