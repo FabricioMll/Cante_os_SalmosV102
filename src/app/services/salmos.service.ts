@@ -75,10 +75,11 @@ export class SalmosService {
     if (this.retornoApi) {
       this.versao = this.retornoApi[2]
       this.salmos = this.retornoApi[0]
+      console.table(this.salmos)
       this.classificacao = this.retornoApi[1]
       this.salmosSubject.next(this.salmos);
       this.classificacaoSubject.next(this.classificacao)
-      if (this.versao != '' && this.versao != '1.0.1') this.presentAlert()
+      if (this.versao != '' && this.versao != '1.0.2') this.presentAlert()
     }
     return
   }

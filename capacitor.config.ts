@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'Cante_os_Salmos.v102',
-  appName: 'Cante_os_Salmos.v102',
+  appId: 'cante_os_salmos.v102',
+  appName: 'Cante_os_Salmos.V102',
   webDir: 'www',
   server: {
     androidScheme: 'https'

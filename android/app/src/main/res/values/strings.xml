@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Cante_os_Salmos.V102</string>
+    <string name="title_activity_main">Cante_os_Salmos.V102</string>
+    <string name="package_name">cante_os_salmos.v102</string>
+    <string name="custom_url_scheme">cante_os_salmos.v102</string>
+</resources>
